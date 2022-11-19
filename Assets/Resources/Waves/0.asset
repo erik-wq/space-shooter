@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56788ca0f91b5f94fb1a74b0ca32bf9a, type: 3}
+  m_Name: 0
+  m_EditorClassIdentifier: 
+  levelNumber: 0
+  levelEnemies: 25
+  levelElites: 4
+  normal:
+  - {fileID: 11400000, guid: 9ecc30c72d0472e4b9e630c919ef13a7, type: 2}
+  elite:
+  - {fileID: 11400000, guid: f3c7b9edc3d07a94eaa78c6c9591c6aa, type: 2}
+  boss:
+  - {fileID: 11400000, guid: 56090b6eb62d24a4c98e9a0a4fe00de2, type: 2}
+  levelMultiplayer: 1
+  moneyMultiplayer: 1

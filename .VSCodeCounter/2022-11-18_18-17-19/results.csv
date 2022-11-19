@@ -1,0 +1,13 @@
+"filename", "language", "C#", "comment", "blank", "total"
+"d:\erik\Development\Game Development\Unity Projects\My project\Assets\Scripts\Bullet.cs", "C#", 31, 0, 7, 38
+"d:\erik\Development\Game Development\Unity Projects\My project\Assets\Scripts\Enemy\BaseEnemy.cs", "C#", 28, 0, 3, 31
+"d:\erik\Development\Game Development\Unity Projects\My project\Assets\Scripts\Enemy\Enemy.cs", "C#", 88, 0, 8, 96
+"d:\erik\Development\Game Development\Unity Projects\My project\Assets\Scripts\Enums.cs", "C#", 12, 0, 2, 14
+"d:\erik\Development\Game Development\Unity Projects\My project\Assets\Scripts\Menu\MainMenu.cs", "C#", 11, 0, 3, 14
+"d:\erik\Development\Game Development\Unity Projects\My project\Assets\Scripts\Player\PlayerMovement.cs", "C#", 75, 0, 16, 91
+"d:\erik\Development\Game Development\Unity Projects\My project\Assets\Scripts\Player\PlayerStats.cs", "C#", 45, 0, 4, 49
+"d:\erik\Development\Game Development\Unity Projects\My project\Assets\Scripts\Sciptable Objects\EnemyTypes.cs", "C#", 15, 0, 2, 17
+"d:\erik\Development\Game Development\Unity Projects\My project\Assets\Scripts\Sciptable Objects\WaveDefinition.cs", "C#", 20, 0, 5, 25
+"d:\erik\Development\Game Development\Unity Projects\My project\Assets\Scripts\Waves\EnemySpawner.cs", "C#", 154, 0, 12, 166
+"d:\erik\Development\Game Development\Unity Projects\My project\Assets\Scripts\Waves\Wave.cs", "C#", 54, 0, 7, 61
+"Total", "-", 533, 0, 69, 602
