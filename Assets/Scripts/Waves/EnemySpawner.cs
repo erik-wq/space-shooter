@@ -45,7 +45,7 @@ public class EnemySpawner : MonoBehaviour
             {
                 moneyMult *= currentWave.moneyMultiplayer;
                 levelMult *= currentWave.levelMultiplayer;
-                currentLevel += 1;
+                //currentLevel += 1;
                 break;
             }
             if (time >= _spawnTime && maxEnemies > _aliveEnmies)

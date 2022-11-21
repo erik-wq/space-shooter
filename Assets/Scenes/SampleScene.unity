@@ -1467,7 +1467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 100
-  baseDamage: 10
+  baseDamage: 100
   baseFireSpeed: 2
   baseHealth: 100
   cam: {fileID: 519420031}
