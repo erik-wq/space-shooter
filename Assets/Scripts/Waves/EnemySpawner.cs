@@ -14,6 +14,7 @@ public class EnemySpawner : MonoBehaviour
     public Camera cam;
 
     public Transform player;
+    public LayerMask enemyMask;
 
     private float time = 0;
     private float _spawnTime;
@@ -35,30 +36,37 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator RunningLevel(int level)
     {
-        var wait = new WaitForSeconds(0.2f);
+        var wait = new WaitForSeconds(0.05f);
         Wave currentWave = waves[level];
         print(currentWave);
         SpawnEnemy(currentWave);
         while (true)
         {
-            if (currentWave.CheckWin())
+            if (_aliveEnmies == 0 && !currentWave.CanSpawn())
             {
                 moneyMult *= currentWave.moneyMultiplayer;
                 levelMult *= currentWave.levelMultiplayer;
-                //currentLevel += 1;
+                currentLevel += 1;
+                Debug.Log("win " + _aliveEnmies);
                 break;
             }
-            if (time >= _spawnTime && maxEnemies > _aliveEnmies)
+            if (time >= _spawnTime && maxEnemies > _aliveEnmies && currentWave.CanSpawn())
             {
                 SpawnEnemy(currentWave);
             }
             if (maxEnemies > _aliveEnmies)
             {
-                time += 0.2f;
+                time += 0.05f;
             }
             yield return wait;
         }
         active = false;
+    }
+    private void CheckEnemies()
+    {
+        var enemies = GetComponentsInChildren<Enemy>();
+        Debug.Log(enemies.Length);
+        _aliveEnmies = enemies.Length;
     }
 
     #region spawning
@@ -79,13 +87,19 @@ public class EnemySpawner : MonoBehaviour
     }
     private void Spawn(EnemyTypes enemy)
     {
-        _aliveEnmies += 1;
-        var enem = Instantiate(enemy.enemy);
         Vector3 pos = Vector3.zero;
         pos = SpawnPos();
+        if(!CheckPosition(pos))
+        {
+            return;
+        }
+        _aliveEnmies += 1;
+        var enem = Instantiate(enemy.enemy);
         pos.z = 0.1f;
         enem.Init(player, this, pos,enemy.movingSpeed * levelMult, enemy.baseLife * levelMult, enemy.baseDamage * levelMult, enemy.baseFireSpeed * levelMult, enemy.bulletSpeed * levelMult, enemy.money * moneyMult);
+        enem.transform.SetParent(transform);
         ResetTimer();
+        CheckEnemies();
     }
 
     private Vector3 SpawnPos()
@@ -130,6 +144,14 @@ public class EnemySpawner : MonoBehaviour
         pos.y -= ofset;
         return pos;
     }
+    private bool CheckPosition(Vector3 position)
+    {
+        if(Physics2D.OverlapCircle(new Vector2(position.x,position.y), 1.2f , enemyMask))
+        {
+            return false;
+        }
+        return true;
+    }
     #endregion
     private void ResetTimer()
     {
@@ -139,7 +161,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void DestroyEnemy()
     {
-        waves[currentLevel].KilledEnemy();
+        CheckEnemies();
         this._aliveEnmies -= 1;
     }
     public void Activate()
@@ -157,6 +179,7 @@ public class EnemySpawner : MonoBehaviour
     }
     private void CreateWaves(List<WaveDefinition> wave)
     {
+        wave.Reverse();
         foreach (var x in wave)
         {
             waves.Add(new Wave(x.levelEnemies, x.levelElites, x.normal, x.elite, x.boss, x.moneyMultiplayer, x.levelMultiplayer));
