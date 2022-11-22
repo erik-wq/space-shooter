@@ -81,6 +81,7 @@ public class Enemy : BaseEnemy
             bul.transform.position = pos.position;
             bul.transform.rotation = transform.rotation;
             bul.Init(_dir, this.bulletSpeed, this.Damage);
+            bul.transform.SetParent(transform.parent);
         }
         _timer = 0;
     }

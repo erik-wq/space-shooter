@@ -29,7 +29,6 @@ public class Wave
 
         this.moneyMultiplayer = money;
         this.levelMultiplayer = level;
-        Debug.Log(eliteCounter);
     }
     public Enums.Enemies CheckNextEnemy()
     {
