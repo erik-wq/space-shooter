@@ -16,7 +16,7 @@ public class Wave
     public float levelMultiplayer { get; private set; }
     public float moneyMultiplayer { get; private set; }
 
-    public Wave(float enemies, float elites, EnemyTypes[] normal, EnemyTypes[] elite, EnemyTypes[] boss, float money,float level)
+    public Wave(float enemies, float elites, EnemyTypes[] normal, EnemyTypes[] elite, EnemyTypes[] boss, float money, float level)
     {
         this.enemies = enemies;
         this.elites = elites;
@@ -30,28 +30,26 @@ public class Wave
         this.moneyMultiplayer = money;
         this.levelMultiplayer = level;
     }
-    public void KilledEnemy()
-    {
-        this.eliteCounter -=1 ;
-        this.enemies -= 1;
-    }
     public Enums.Enemies CheckNextEnemy()
     {
-        if(eliteCounter <= 0)
+        // Debug.Log(enemies);
+        if (enemies == 1)
         {
-            if(enemies == 1)
-            {
-                return Enums.Enemies.boss;
-            }
+            this.enemies -= 1;
+            return Enums.Enemies.boss;
+        }
+        this.enemies -= 1;
+        this.eliteCounter -= 1;
+        if (eliteCounter <= 0)
+        {
             eliteCounter = toElite;
             return Enums.Enemies.elite;
         }
-        eliteCounter -= 1;
         return Enums.Enemies.normal;
     }
-    public bool CheckWin()
+    public bool CanSpawn()
     {
-        if(this.enemies <= 0)
+        if (enemies > 0)
         {
             return true;
         }

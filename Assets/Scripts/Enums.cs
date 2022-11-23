@@ -8,6 +8,7 @@ public class Enums
     { 
         normal,
         elite,
-        boss
+        boss,
+        none
     }
 }
