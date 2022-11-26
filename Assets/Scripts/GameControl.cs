@@ -6,6 +6,7 @@ public class GameControl : MonoBehaviour
 {
     public GameObject Game;
     public GameObject Menu;
+    public GameObject roundWin;
 
     private PlayerMovement _player;
     public GameObject gameUI;
@@ -20,7 +21,8 @@ public class GameControl : MonoBehaviour
     {
         Menu.SetActive(false);
         Game.SetActive(true);
-        if(_spawner == null)
+        roundWin.SetActive(false);
+        if (_spawner == null)
         {
             Debug.LogError("missing spawner script in child");
             return;
@@ -28,11 +30,18 @@ public class GameControl : MonoBehaviour
         _player.ResetToStart();
         _spawner.Activate();
     }
-    public void ShowMenu()
+    /*public void ShowMenu()
     {
         _spawner.KillAllEnemies();
         _player.DestroyBullets();
         Menu.SetActive(true);
+        Game.SetActive(false);
+    }*/
+    public void ShowMenu()
+    {
+        _spawner.KillAllEnemies();
+        _player.DestroyBullets();
+        roundWin.SetActive(true);
         Game.SetActive(false);
     }
     public void StartSetupGame()
@@ -40,5 +49,11 @@ public class GameControl : MonoBehaviour
         _player.gameObject.SetActive(true);
         gameUI.SetActive(true);
         Game.SetActive(false);
+    }
+
+    public void RoundWin()
+    {
+        roundWin.SetActive(false);
+        Menu.SetActive(true);
     }
 }
