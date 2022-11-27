@@ -19,4 +19,4 @@ MonoBehaviour:
   bulletSpeed: 8
   movingSpeed: 30
   money: 20
-  enemy: {fileID: 3445734324335051616, guid: d9a51ee24bd5b204e8ef3ca3c53d5c6b, type: 3}
+  enemy: {fileID: 2573605042341038585, guid: 62024e66b3475cb4f9e4bb98c961716f, type: 3}

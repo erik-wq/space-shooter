@@ -10,7 +10,8 @@ public class BgMove : MonoBehaviour
 
     [Range(-1f, 1f)]
     public float scrollSpeed;
-    private float offset;
+    private float offsetx;
+    private float offsety;
     private Material mat;
 
     void Start()
@@ -24,27 +25,27 @@ public class BgMove : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             scrollSpeed = -0.1f;
-            offset += (Time.deltaTime * scrollSpeed);
-            mat.SetTextureOffset("_MainTex", new Vector2(offset, 0));
+            offsetx += (Time.deltaTime * scrollSpeed);
+            mat.SetTextureOffset("_MainTex", new Vector2(offsetx, offsety));
         }
         if (Input.GetKey(KeyCode.D))
         {
             scrollSpeed = 0.1f;
-            offset += (Time.deltaTime * scrollSpeed);
-            mat.SetTextureOffset("_MainTex", new Vector2(offset, 0));
+            offsetx += (Time.deltaTime * scrollSpeed);
+            mat.SetTextureOffset("_MainTex", new Vector2(offsetx, offsety));
         }
 
         if (Input.GetKey(KeyCode.S))
         {
             scrollSpeed = -0.1f;
-            offset += (Time.deltaTime * scrollSpeed);
-            mat.SetTextureOffset("_MainTex", new Vector2(0, offset));
+            offsety += (Time.deltaTime * scrollSpeed);
+            mat.SetTextureOffset("_MainTex", new Vector2(offsetx, offsety));
         }
         if (Input.GetKey(KeyCode.W))
         {
             scrollSpeed = 0.1f;
-            offset += (Time.deltaTime * scrollSpeed);
-            mat.SetTextureOffset("_MainTex", new Vector2(0, offset));
+            offsety += (Time.deltaTime * scrollSpeed);
+            mat.SetTextureOffset("_MainTex", new Vector2(offsetx, offsety));
         }
 
     }

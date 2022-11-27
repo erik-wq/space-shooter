@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public float baseDamage = 10;
     public float baseFireSpeed = 1.5f;
     public float baseHealth = 100;
+    public float currentDamage;
     public Slider healthSlider;
 
     private Vector2 movement;
@@ -27,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 _startPos;
     private GameControl _gameControl;
 
+
     private void Awake()
     {
         _gameControl = GetComponentInParent<GameControl>();
@@ -37,6 +39,23 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         GetInputs();
+        if (transform.position.x < -8.5f)
+        {
+            transform.position = new Vector3(-8.5f, transform.position.y,transform.position.z);
+        }
+        if (transform.position.x > 8.5f)
+        {
+            transform.position = new Vector3(8.5f, transform.position.y, transform.position.z);
+        }
+        if (transform.position.y > 4.5f)
+        {
+            transform.position = new Vector3(transform.position.x, 4.5f, transform.position.z);
+        }
+        if (transform.position.y < -4.5f)
+        {
+            transform.position = new Vector3(transform.position.x, -4.5f, transform.position.z);
+        }
+
     }
 
     private IEnumerator Shooting()
@@ -77,11 +96,13 @@ public class PlayerMovement : MonoBehaviour
     {
         foreach (var trans in buletPos)
         {
+            currentDamage = baseDamage* stats.damageMult + ((baseDamage* stats.dmgMult)-baseDamage);
             var bulet = Instantiate(bullet);
-            bulet.Init((mousePos - rb.position).normalized, 5f , baseDamage * stats.damageMult);
+            bulet.Init((mousePos - rb.position).normalized, 5f , currentDamage);
             bulet.transform.position = trans.position;
             bulet.transform.rotation = rb.transform.rotation;
             bulet.transform.SetParent(bullets.transform);
+            
         }
     }
 
@@ -101,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     _gameControl = GetComponentInParent<GameControl>();
                 }
-                _gameControl.ShowMenu();
+                _gameControl.ShowLoss();
             }
         }
     }

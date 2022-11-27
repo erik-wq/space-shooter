@@ -75,15 +75,19 @@ public class Enemy : BaseEnemy
     }
     private void Shoot()
     {
-        foreach(var pos in firePositions)
+        if (_rb.position.x <9 && _rb.position.x>-9 && _rb.position.y>-5 && _rb.position.y < 5)
         {
-            Bullet bul = Instantiate(bulet);
-            bul.transform.position = pos.position;
-            bul.transform.rotation = transform.rotation;
-            bul.Init(_dir, this.bulletSpeed, this.Damage);
-            bul.transform.SetParent(transform.parent);
+            foreach (var pos in firePositions)
+            {
+                Bullet bul = Instantiate(bulet);
+                bul.transform.position = pos.position;
+                bul.transform.rotation = transform.rotation;
+                bul.Init(_dir, this.bulletSpeed, this.Damage);
+                bul.transform.SetParent(transform.parent);
+            }
+            _timer = 0;
         }
-        _timer = 0;
+        
     }
     private void OnDestroy()
     {

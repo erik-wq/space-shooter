@@ -15,6 +15,26 @@ public class Bullet : MonoBehaviour
         _trans = GetComponent<Transform>();    
     }
 
+    private void Update()
+    {
+        if (transform.position.x < -8.6f)
+        {
+            Destroy(this.gameObject);
+        }
+        if (transform.position.x > 8.6f)
+        {
+            Destroy(this.gameObject);
+        }
+        if (transform.position.y > 4.6f)
+        {
+            Destroy(this.gameObject);
+        }
+        if (transform.position.y < -4.6f)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
     private void FixedUpdate()
     {
         if (_directrion == Vector2.zero) return;
