@@ -10,13 +10,14 @@ public class PlayerStats : MonoBehaviour
     public TextMeshProUGUI healthUpgradeCost;
     public TextMeshProUGUI fireSpeedUpgradeCost;
 
-    public TextMeshProUGUI currentDamage;
-    public TextMeshProUGUI currentHealth;
-    public TextMeshProUGUI currentFireSpeed;
+    public TextMeshProUGUI currentDamageTxt;
+    public TextMeshProUGUI currentHealthTxt;
+    public TextMeshProUGUI currentFireSpeedTxt;
 
     public TextMeshProUGUI damageAfterUpdate;
     public TextMeshProUGUI healthAfterUpdate;
     public TextMeshProUGUI fireSpeedAfterUpdate;
+
 
 
     private float dmgUpgradeCost = 50;
@@ -76,10 +77,6 @@ public class PlayerStats : MonoBehaviour
             dmgUpgradeCost = (int)dmgUpgradeCost;
             damageUpgradeCost.text = dmgUpgradeCost.ToString();
         }
-        else
-        {
-            Debug.Log("si chudobny cavo");
-        }
     }
 
     public void HealthUpgrade()
@@ -94,10 +91,7 @@ public class PlayerStats : MonoBehaviour
             hpUpgradeCost = (int)hpUpgradeCost;
             healthUpgradeCost.text = hpUpgradeCost.ToString();
         }
-        else
-        {
-            Debug.Log("si chudobny cavo");
-        }
+
     }
 
     public void FireSpeedUpgrade()
@@ -110,10 +104,6 @@ public class PlayerStats : MonoBehaviour
             fsUpgradeCost *= increment;
             fsUpgradeCost = (int)fsUpgradeCost;
             fireSpeedUpgradeCost.text = fsUpgradeCost.ToString();
-        }
-        else
-        {
-            Debug.Log("si chudobny cavo");
         }
     }
 }

@@ -14,6 +14,9 @@ public class PlayerMovement : MonoBehaviour
     public TextMeshProUGUI healthAfterUpdate;
     public TextMeshProUGUI fireSpeedAfterUpdate;
 
+    [SerializeField] private AudioSource playerShoot;
+
+
     public GameObject bullets;
     public float speed;
 
@@ -21,8 +24,11 @@ public class PlayerMovement : MonoBehaviour
     public float baseFireSpeed = 2f;
     public float baseHealth = 100;
     public float currentDamage;
-    public float currentHealth;
+    public float currentHealth = 100;
     public float currentFireSpeed;
+
+    public float maxHealth= 100;
+
     public Slider healthSlider;
 
     private Vector2 movement;
@@ -49,16 +55,15 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        currentHealth = baseHealth * stats.hpMult;
-        currentFireSpeed = baseFireSpeed / stats.fsMult *2;
-
-        currentHealthTxt.text = ((int)currentHealth).ToString();
-        healthAfterUpdate.text = ((int)currentHealth * 1.2).ToString();
+       
+        
+        currentFireSpeed = baseFireSpeed / stats.fsMult * 2;
+        
+        currentDamageTxt.text = ((int)currentDamage).ToString();
+        damageAfterUpdate.text = ((int)(currentDamage * 1.2)).ToString();
 
         currentFireSpeedTxt.text = Mathf.Round((currentFireSpeed*100f)/10f).ToString();
         fireSpeedAfterUpdate.text = Mathf.Round(((currentFireSpeed/ 1.2f) * 100.0f) /10f).ToString();
-
-        ;
 
         GetInputs();
         if (transform.position.x < -8.5f)
@@ -79,6 +84,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
+        currentHealth = maxHealth + ((baseHealth * stats.hpMult) - baseHealth);
+        print(currentHealth);
+
+        currentHealthTxt.text = ((int)currentHealth).ToString();
+
+        healthAfterUpdate.text = ((int)currentHealth * 1.2).ToString();
+
     }
 
     private IEnumerator Shooting()
@@ -89,7 +101,6 @@ public class PlayerMovement : MonoBehaviour
         }
         while(true)
         {
-            print(currentFireSpeed);
             yield return new WaitForSeconds(currentFireSpeed);
             Shoot();
         }
@@ -115,19 +126,17 @@ public class PlayerMovement : MonoBehaviour
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
         rb.rotation = angle;
     }
-    private void Shoot()
+    public void Shoot()
     {
         foreach (var trans in buletPos)
         {
             currentDamage = baseDamage + ((baseDamage* stats.dmgMult)-baseDamage);
-            currentDamageTxt.text = ((int)currentDamage).ToString();
-            damageAfterUpdate.text = ((int)(currentDamage * 1.2)).ToString();
             var bulet = Instantiate(bullet);
             bulet.Init((mousePos - rb.position).normalized, 5f , currentDamage);
             bulet.transform.position = trans.position;
             bulet.transform.rotation = rb.transform.rotation;
             bulet.transform.SetParent(bullets.transform);
-            
+            playerShoot.Play();
         }
     }
 
@@ -136,14 +145,15 @@ public class PlayerMovement : MonoBehaviour
         print(collision.gameObject.name + collision.gameObject.tag);
         if(collision.gameObject.tag == "bullet")
         {
+
             Bullet objekt = collision.gameObject.GetComponent<Bullet>();
             this.baseHealth -= objekt.GetDamage();
-            print(currentHealth);
+            print(baseHealth);
             Destroy(objekt.gameObject);
-            healthSlider.value = currentHealth / 100;
-            if (this.currentHealth <= 0)
+            healthSlider.value = baseHealth / 100;
+            if (this.baseHealth <= 0)
             {
-                if(_gameControl == null)
+                if (_gameControl == null)
                 {
                     _gameControl = GetComponentInParent<GameControl>();
                 }

@@ -15,6 +15,8 @@ public class Enemy : BaseEnemy
     private float _timer = 0;
     private Vector3 _dir;
 
+    [SerializeField] private AudioSource enemyShoot;
+
 
     void Start()
     {
@@ -84,6 +86,7 @@ public class Enemy : BaseEnemy
                 bul.transform.rotation = transform.rotation;
                 bul.Init(_dir, this.bulletSpeed, this.Damage);
                 bul.transform.SetParent(transform.parent);
+                enemyShoot.Play();
             }
             _timer = 0;
         }
@@ -93,6 +96,7 @@ public class Enemy : BaseEnemy
     {
         if (money != 0)
         {
+            
             var stats = PlayerStats._instance;
             stats.AddMoney(money);
         }

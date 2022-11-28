@@ -9,6 +9,7 @@ public class GameControl : MonoBehaviour
     public GameObject roundWin;
     public GameObject roundLoss;
     public GameObject MoneyUpgrade;
+    public GameObject settings;
 
     private PlayerMovement _player;
     public GameObject gameUI;
@@ -24,6 +25,7 @@ public class GameControl : MonoBehaviour
         Menu.SetActive(false);
         Game.SetActive(true);
 
+        settings.SetActive(false);
         roundWin.SetActive(false);
         roundLoss.SetActive(false);
         MoneyUpgrade.SetActive(false);
@@ -43,6 +45,7 @@ public class GameControl : MonoBehaviour
         _player.DestroyBullets();
         roundWin.SetActive(true);
         Game.SetActive(false);
+        settings.SetActive(false);
     }
 
     public void ShowLoss()
@@ -51,6 +54,7 @@ public class GameControl : MonoBehaviour
         _player.DestroyBullets();
         roundLoss.SetActive(true);
         Game.SetActive(false);
+        settings.SetActive(false);
     }
 
     public void StartSetupGame()
@@ -62,16 +66,31 @@ public class GameControl : MonoBehaviour
 
     public void ShowMenu()
     {
+        Menu.SetActive(true);
+
         MoneyUpgrade.SetActive(false);
         roundWin.SetActive(false);
         roundLoss.SetActive(false);
         Game.SetActive(false);
-        Menu.SetActive(true);
+        settings.SetActive(false);
     }
 
     public void ShowUpgradeMenu()
     {
         MoneyUpgrade.SetActive(true);
+        settings.SetActive(false);
+    }
+
+    public void ShowSettings()
+    {
+        settings.SetActive(true);
+        MoneyUpgrade.SetActive(false);
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+        Debug.Log("Game is exiting");
     }
     
 }
