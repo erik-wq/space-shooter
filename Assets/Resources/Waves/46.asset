@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56788ca0f91b5f94fb1a74b0ca32bf9a, type: 3}
-  m_Name: 1
+  m_Name: 46
   m_EditorClassIdentifier: 
-  levelNumber: 1
-  levelEnemies: 3
+  levelNumber: 16
+  levelEnemies: 1
   levelElites: 1
   normal:
   - {fileID: 11400000, guid: 9ecc30c72d0472e4b9e630c919ef13a7, type: 2}

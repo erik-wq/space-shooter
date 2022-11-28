@@ -1,17 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public TextMeshProUGUI currentDamageTxt;
+    public TextMeshProUGUI currentHealthTxt;
+    public TextMeshProUGUI currentFireSpeedTxt;
+
+    public TextMeshProUGUI damageAfterUpdate;
+    public TextMeshProUGUI healthAfterUpdate;
+    public TextMeshProUGUI fireSpeedAfterUpdate;
+
     public GameObject bullets;
     public float speed;
 
     public float baseDamage = 10;
-    public float baseFireSpeed = 1.5f;
+    public float baseFireSpeed = 2f;
     public float baseHealth = 100;
     public float currentDamage;
+    public float currentHealth;
+    public float currentFireSpeed;
     public Slider healthSlider;
 
     private Vector2 movement;
@@ -38,6 +49,17 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        currentHealth = baseHealth * stats.hpMult;
+        currentFireSpeed = baseFireSpeed / stats.fsMult *2;
+
+        currentHealthTxt.text = ((int)currentHealth).ToString();
+        healthAfterUpdate.text = ((int)currentHealth * 1.2).ToString();
+
+        currentFireSpeedTxt.text = Mathf.Round((currentFireSpeed*100f)/10f).ToString();
+        fireSpeedAfterUpdate.text = Mathf.Round(((currentFireSpeed/ 1.2f) * 100.0f) /10f).ToString();
+
+        ;
+
         GetInputs();
         if (transform.position.x < -8.5f)
         {
@@ -56,6 +78,7 @@ public class PlayerMovement : MonoBehaviour
             transform.position = new Vector3(transform.position.x, -4.5f, transform.position.z);
         }
 
+
     }
 
     private IEnumerator Shooting()
@@ -66,8 +89,8 @@ public class PlayerMovement : MonoBehaviour
         }
         while(true)
         {
-            print(baseFireSpeed + " " + stats.fireSpeedMult);
-            yield return new WaitForSeconds(baseFireSpeed / stats.fireSpeedMult);
+            print(currentFireSpeed);
+            yield return new WaitForSeconds(currentFireSpeed);
             Shoot();
         }
     }
@@ -96,7 +119,9 @@ public class PlayerMovement : MonoBehaviour
     {
         foreach (var trans in buletPos)
         {
-            currentDamage = baseDamage* stats.damageMult + ((baseDamage* stats.dmgMult)-baseDamage);
+            currentDamage = baseDamage + ((baseDamage* stats.dmgMult)-baseDamage);
+            currentDamageTxt.text = ((int)currentDamage).ToString();
+            damageAfterUpdate.text = ((int)(currentDamage * 1.2)).ToString();
             var bulet = Instantiate(bullet);
             bulet.Init((mousePos - rb.position).normalized, 5f , currentDamage);
             bulet.transform.position = trans.position;
@@ -113,10 +138,10 @@ public class PlayerMovement : MonoBehaviour
         {
             Bullet objekt = collision.gameObject.GetComponent<Bullet>();
             this.baseHealth -= objekt.GetDamage();
-            print(baseHealth);
+            print(currentHealth);
             Destroy(objekt.gameObject);
-            healthSlider.value = baseHealth / 100;
-            if (this.baseHealth <= 0)
+            healthSlider.value = currentHealth / 100;
+            if (this.currentHealth <= 0)
             {
                 if(_gameControl == null)
                 {
@@ -131,6 +156,7 @@ public class PlayerMovement : MonoBehaviour
         baseHealth = 100;
         healthSlider.value = 1;
         transform.position = _startPos;
+
         StopAllCoroutines();
         StartCoroutine(Shooting());
     }

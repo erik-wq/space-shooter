@@ -10,13 +10,18 @@ public class PlayerStats : MonoBehaviour
     public TextMeshProUGUI healthUpgradeCost;
     public TextMeshProUGUI fireSpeedUpgradeCost;
 
-    private int dmgUpgradeLvl = 0;
-    private int hpUpgradeLvl = 0;
-    private int fsUpgradeLvl = 0;
+    public TextMeshProUGUI currentDamage;
+    public TextMeshProUGUI currentHealth;
+    public TextMeshProUGUI currentFireSpeed;
+
+    public TextMeshProUGUI damageAfterUpdate;
+    public TextMeshProUGUI healthAfterUpdate;
+    public TextMeshProUGUI fireSpeedAfterUpdate;
+
 
     private float dmgUpgradeCost = 50;
-    private float hpUpgradeCost = 10;
-    private float fsUpgradeCost = 10;
+    private float hpUpgradeCost = 50;
+    private float fsUpgradeCost = 50;
 
     public float dmgMult = 1.2f;
     public float hpMult = 1.2f;
@@ -24,11 +29,9 @@ public class PlayerStats : MonoBehaviour
 
     private float increment = 1.1f;
 
+    private PlayerMovement playerMovement;
 
     public TextMeshProUGUI moneyText;
-    public float damageMult { get; private set; }
-    public float healthMult { get; private set; }
-    public float fireSpeedMult { get; private set; }
     public float money  { get; private set; }
 
     public static PlayerStats _instance { get; private set; }
@@ -44,9 +47,9 @@ public class PlayerStats : MonoBehaviour
             Destroy(this);
         }
         money = 0;
-        healthMult = 1;
-        fireSpeedMult = 1;
-        damageMult = 1;
+        hpMult = 1;
+        fsMult = 1;
+        dmgMult = 1;
     }
 
     private void Update()
@@ -57,38 +60,60 @@ public class PlayerStats : MonoBehaviour
     public void AddMoney(float value)
     {
         money += value;
+        money = (int)(money);
         moneyText.text = money.ToString();
     }
-    public void HealthUpgrade()
-    {
-        healthMult *= 1.3f;
-    }
-    public void FireSpeedUpgrade()
-    {
-        fireSpeedMult *= 1.3f;
-    }
-    public void DamageUpgrade()
-    {
-        damageMult *= 1.3f;
-    }
 
 
-    public void DmgUpgradee()
+    public void DmgUpgrade()
     {
 
         if (dmgUpgradeCost < money)
         {
             money -= dmgUpgradeCost;
-            dmgUpgradeLvl++;
-            dmgMult = dmgMult * increment;
-            dmgUpgradeCost = dmgUpgradeCost * increment;
+            dmgMult *= increment;
+            dmgUpgradeCost *= increment;
+            dmgUpgradeCost = (int)dmgUpgradeCost;
             damageUpgradeCost.text = dmgUpgradeCost.ToString();
         }
-
         else
         {
             Debug.Log("si chudobny cavo");
         }
+    }
 
+    public void HealthUpgrade()
+    {
+
+        if (hpUpgradeCost < money)
+        {
+            
+            money -= dmgUpgradeCost;
+            hpMult *= increment;
+            hpUpgradeCost *= increment;
+            hpUpgradeCost = (int)hpUpgradeCost;
+            healthUpgradeCost.text = hpUpgradeCost.ToString();
+        }
+        else
+        {
+            Debug.Log("si chudobny cavo");
+        }
+    }
+
+    public void FireSpeedUpgrade()
+    {
+
+        if (dmgUpgradeCost < money)
+        {
+            money -= dmgUpgradeCost;
+            fsMult *= increment;
+            fsUpgradeCost *= increment;
+            fsUpgradeCost = (int)fsUpgradeCost;
+            fireSpeedUpgradeCost.text = fsUpgradeCost.ToString();
+        }
+        else
+        {
+            Debug.Log("si chudobny cavo");
+        }
     }
 }

@@ -55,7 +55,7 @@ public class EnemySpawner : MonoBehaviour
                 _levelMult *= currentWave.levelMultiplayer;
                 _currentLevel += 1;
                 Debug.Log("win " + _aliveEnmies);
-                _gameControl.ShowMenu();
+                _gameControl.ShowWin();
                 break;
             }
             if (time >= _spawnTime && maxEnemies > _aliveEnmies && currentWave.CanSpawn())

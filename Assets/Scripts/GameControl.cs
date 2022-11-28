@@ -7,6 +7,8 @@ public class GameControl : MonoBehaviour
     public GameObject Game;
     public GameObject Menu;
     public GameObject roundWin;
+    public GameObject roundLoss;
+    public GameObject MoneyUpgrade;
 
     private PlayerMovement _player;
     public GameObject gameUI;
@@ -23,6 +25,8 @@ public class GameControl : MonoBehaviour
         Game.SetActive(true);
 
         roundWin.SetActive(false);
+        roundLoss.SetActive(false);
+        MoneyUpgrade.SetActive(false);
 
         if (_spawner == null)
         {
@@ -45,7 +49,7 @@ public class GameControl : MonoBehaviour
     {
         _spawner.KillAllEnemies();
         _player.DestroyBullets();
-        roundWin.SetActive(true);
+        roundLoss.SetActive(true);
         Game.SetActive(false);
     }
 
@@ -58,7 +62,16 @@ public class GameControl : MonoBehaviour
 
     public void ShowMenu()
     {
+        MoneyUpgrade.SetActive(false);
         roundWin.SetActive(false);
+        roundLoss.SetActive(false);
+        Game.SetActive(false);
         Menu.SetActive(true);
     }
+
+    public void ShowUpgradeMenu()
+    {
+        MoneyUpgrade.SetActive(true);
+    }
+    
 }
