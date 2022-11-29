@@ -19,16 +19,7 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject bullets;
     public float speed;
-
-    public float baseDamage = 10;
-    public float baseFireSpeed = 2f;
-    public float baseHealth = 100;
-    public float currentDamage;
     public float currentHealth = 100;
-    public float currentFireSpeed;
-
-    public float maxHealth= 100;
-
     public Slider healthSlider;
 
     private Vector2 movement;
@@ -58,18 +49,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        spriteRenderer2 = GetComponent<SpriteRenderer>();
-        spriteRenderer2.sprite = changeColor.spriteRenderer.sprite;
-
-        currentDamage = baseDamage + ((baseDamage * stats.dmgMult) - baseDamage);
-
-        currentFireSpeed = baseFireSpeed / stats.fsMult * 2;
-        
-        currentDamageTxt.text = ((int)currentDamage).ToString();
-        damageAfterUpdate.text = ((int)(currentDamage * 1.2)).ToString();
-
-        currentFireSpeedTxt.text = Mathf.Round((currentFireSpeed*100f)/10f).ToString();
-        fireSpeedAfterUpdate.text = Mathf.Round(((currentFireSpeed/ 1.2f) * 100.0f) /10f).ToString();
 
         GetInputs();
         if (transform.position.x < -8.5f)
@@ -88,15 +67,6 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, -4.5f, transform.position.z);
         }
-
-
-        currentHealth = maxHealth + ((baseHealth * stats.hpMult) - baseHealth);
-        print(currentHealth);
-
-        currentHealthTxt.text = ((int)currentHealth).ToString();
-
-        healthAfterUpdate.text = ((int)currentHealth * 1.2).ToString();
-
     }
 
     private IEnumerator Shooting()
@@ -107,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
         }
         while(true)
         {
-            yield return new WaitForSeconds(currentFireSpeed);
+            yield return new WaitForSeconds(stats.currentFireSpeed);
             Shoot();
         }
     }
@@ -136,9 +106,8 @@ public class PlayerMovement : MonoBehaviour
     {
         foreach (var trans in buletPos)
         {
-            
             var bulet = Instantiate(bullet);
-            bulet.Init((mousePos - rb.position).normalized, 5f , currentDamage);
+            bulet.Init((mousePos - rb.position).normalized, 5f , stats.currentDamage);
             bulet.transform.position = trans.position;
             bulet.transform.rotation = rb.transform.rotation;
             bulet.transform.SetParent(bullets.transform);
@@ -153,11 +122,11 @@ public class PlayerMovement : MonoBehaviour
         {
 
             Bullet objekt = collision.gameObject.GetComponent<Bullet>();
-            this.baseHealth -= objekt.GetDamage();
-            print(baseHealth);
+            this.currentHealth -= objekt.GetDamage();
+            print(currentHealth + " , " + stats.currentHealth);
             Destroy(objekt.gameObject);
-            healthSlider.value = baseHealth / 100;
-            if (this.baseHealth <= 0)
+            healthSlider.value = currentHealth / stats.currentHealth;
+            if (this.currentHealth <= 0)
             {
                 if (_gameControl == null)
                 {
@@ -169,7 +138,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void ResetToStart()
     {
-        baseHealth = 100;
+        currentHealth = stats.currentHealth;
         healthSlider.value = 1;
         transform.position = _startPos;
 
