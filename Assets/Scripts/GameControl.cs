@@ -55,11 +55,12 @@ public class GameControl : MonoBehaviour
         }
     }
 
-    public void Contineu()
+    public void Continue()
     {
         _spawner.ResumeSpawning();
         Time.timeScale = 1;
         settingsIngame.SetActive(false);
+        Game.SetActive(true);
     }
 
     public void ShowWin()

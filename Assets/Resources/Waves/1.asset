@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: 1
   m_EditorClassIdentifier: 
   levelNumber: 1
-  levelEnemies: 3
-  levelElites: 1
+  levelEnemies: 10
+  levelElites: 2
   normal:
   - {fileID: 11400000, guid: 9ecc30c72d0472e4b9e630c919ef13a7, type: 2}
   elite:

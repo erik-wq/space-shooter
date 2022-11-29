@@ -20,9 +20,9 @@ public class PlayerStats : MonoBehaviour
     #endregion
 
     #region Upgrades
-    private float dmgUpgradeCost = 50;
-    private float hpUpgradeCost = 50;
-    private float fsUpgradeCost = 50;
+    public float dmgUpgradeCost = 50;
+    public float hpUpgradeCost = 50;
+    public float fsUpgradeCost = 50;
 
     public float dmgMult = 1.2f;
     public float hpMult = 1.2f;
