@@ -29,6 +29,7 @@ public class EnemySpawner : MonoBehaviour
 
     private float _moneyMult = 1;
     private float _levelMult = 1;
+    private bool _stop = false;
 
     private void Start()
     {
@@ -44,11 +45,16 @@ public class EnemySpawner : MonoBehaviour
     {
         levelText.SetText(_currentLevel.ToString());
         var wait = new WaitForSeconds(0.05f);
-        Wave currentWave = waves[level];
-        print(currentWave);
+        Wave currentWave = CopyCurentWave(level);
+        print(currentWave.enemies);
         SpawnEnemy(currentWave);
         while (true)
         {
+            if(_stop)
+            {
+                yield return new WaitForEndOfFrame();
+                continue;
+            }
             if (_aliveEnmies == 0 && !currentWave.CanSpawn())
             {
                 _moneyMult *= currentWave.moneyMultiplayer;
@@ -69,6 +75,10 @@ public class EnemySpawner : MonoBehaviour
             yield return wait;
         }
         active = false;
+    }
+    private Wave CopyCurentWave(int level)
+    {
+        return new Wave(waves[level].enemies, waves[level].elites, waves[level].normal,waves[level].elite,waves[level].boss,waves[level].moneyMultiplayer,waves[level].levelMultiplayer);
     }
     private void CheckEnemies()
     {
@@ -204,5 +214,14 @@ public class EnemySpawner : MonoBehaviour
         {
             Destroy(x.gameObject);
         }
+        active = false;
+    }
+    public void StopSpawning()
+    {
+        _stop = true;
+    }
+    public void ResumeSpawning()
+    {
+        _stop = false;
     }
 }

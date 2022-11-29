@@ -5,7 +5,7 @@ using UnityEngine;
 public class Wave
 {
     public float enemies { get; private set; }
-    private float elites;
+    public float elites {get; private set;}
     private int toElite;
     private int eliteCounter;
 
