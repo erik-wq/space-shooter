@@ -37,7 +37,11 @@ public class PlayerMovement : MonoBehaviour
     private GameControl _gameControl;
 
     public SpriteRenderer spriteRenderer2;
-    public ChangeColor changeColor;
+    // public ChangeColor changeColor;
+
+    private TemporalyUpgrades levelUp;
+    public GameObject upgradeMenu;
+
 
     private void Awake()
     {   
@@ -92,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = movement * speed * Time.fixedDeltaTime;
+        rb.velocity = movement * (speed * (1 + levelUp.speed))* Time.fixedDeltaTime;
 
         Rotate();
     }
@@ -107,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
         foreach (var trans in buletPos)
         {
             var bulet = Instantiate(bullet);
-            bulet.Init((mousePos - rb.position).normalized, 5f , stats.currentDamage);
+            bulet.Init((mousePos - rb.position).normalized, 5f , stats.currentDamage + levelUp.dmg);
             bulet.transform.position = trans.position;
             bulet.transform.rotation = rb.transform.rotation;
             bulet.transform.SetParent(bullets.transform);
@@ -123,9 +127,8 @@ public class PlayerMovement : MonoBehaviour
 
             Bullet objekt = collision.gameObject.GetComponent<Bullet>();
             this.currentHealth -= objekt.GetDamage();
-            print(currentHealth + " , " + stats.currentHealth);
             Destroy(objekt.gameObject);
-            healthSlider.value = currentHealth / stats.currentHealth;
+            healthSlider.value = (currentHealth) / (stats.currentHealth*(1 +levelUp.hp));
             if (this.currentHealth <= 0)
             {
                 if (_gameControl == null)
@@ -133,11 +136,13 @@ public class PlayerMovement : MonoBehaviour
                     _gameControl = GetComponentInParent<GameControl>();
                 }
                 _gameControl.ShowLoss();
+                upgradeMenu.SetActive(false);
             }
         }
     }
     public void ResetToStart()
     {
+        levelUp = EnemySpawner.instance.levelUps;
         currentHealth = stats.currentHealth;
         healthSlider.value = 1;
         transform.position = _startPos;
@@ -152,5 +157,30 @@ public class PlayerMovement : MonoBehaviour
         {
             Destroy(x.gameObject);
         }
+    }
+    public void UpgradeHP()
+    {
+        if(levelUp == null) return;
+        levelUp.HpUp();
+        currentHealth *= (1 + levelUp.hp);
+        AfterUpgrade();
+    }
+    public void UpgradeDmg()
+    {
+        if(levelUp == null) return;
+        levelUp.DmgUp();
+        AfterUpgrade();
+    }
+    public void UpgradeSpeed()
+    {
+        if(levelUp == null) return;
+        levelUp.SpeedUp();
+        AfterUpgrade();
+    }
+    private void AfterUpgrade()
+    {
+        EnemySpawner.instance.ResumeSpawning();
+        Time.timeScale = 1;
+        upgradeMenu.SetActive(false);
     }
 }

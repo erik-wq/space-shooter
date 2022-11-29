@@ -30,7 +30,8 @@ public class EnemySpawner : MonoBehaviour
     private float _moneyMult = 1;
     private float _levelMult = 1;
     private bool _stop = false;
-    public bool earnMoney = true;
+    public static bool earnMoney = false;
+    public TemporalyUpgrades levelUps {get; private set;}
 
     public static EnemySpawner instance;
 
@@ -42,6 +43,7 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
         instance = this;
+        levelUps = GetComponent<TemporalyUpgrades>();
     }
     private void Start()
     {
@@ -125,7 +127,7 @@ public class EnemySpawner : MonoBehaviour
         _aliveEnmies += 1;
         var enem = Instantiate(enemy.enemy);
         pos.z = 0.1f;
-        enem.Init(player, this, pos,enemy.movingSpeed * _levelMult, enemy.baseLife * _levelMult, enemy.baseDamage * _levelMult, enemy.baseFireSpeed * _levelMult, enemy.bulletSpeed * _levelMult, enemy.money * _moneyMult);
+        enem.Init(player, this, pos,enemy.movingSpeed * _levelMult, enemy.baseLife * _levelMult, enemy.baseDamage * _levelMult, enemy.baseFireSpeed * _levelMult, enemy.bulletSpeed * _levelMult, enemy.money * _moneyMult, enemy.type);
         enem.transform.SetParent(transform);
         ResetTimer();
         CheckEnemies();
@@ -204,6 +206,7 @@ public class EnemySpawner : MonoBehaviour
         {
             return;
         }
+        levelUps.Reset();
         StartCoroutine(RunningLevel(_currentLevel));
     }
     private void CreateWaves(List<WaveDefinition> wave)
@@ -216,19 +219,18 @@ public class EnemySpawner : MonoBehaviour
     }
     public void KillAllEnemies()
     {
-        earnMoney = false;
-        Debug.Log(earnMoney);
+        EnemySpawner.earnMoney = true;
         var enemies = GetComponentsInChildren<Enemy>();
         foreach(var x in enemies)
         {
-            Destroy(x.gameObject);
+            x.KillAfterPlayer();
         }
         var bullets = GetComponentsInChildren<Bullet>();
         foreach(var x in bullets)
         {
             Destroy(x.gameObject);
         }
-        earnMoney = true;
+        EnemySpawner.earnMoney = false;
         active = false;
         
     }

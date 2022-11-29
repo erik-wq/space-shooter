@@ -14,6 +14,8 @@ public class Enemy : BaseEnemy
     
     private float _timer = 0;
     private Vector3 _dir;
+    private bool addLevel = false;
+    private bool earnMoney = true;
 
     [SerializeField] private AudioSource enemyShoot;
 
@@ -62,7 +64,7 @@ public class Enemy : BaseEnemy
             Shoot();
         }
     }
-    public void Init(Transform player, EnemySpawner spawner, Vector3 position,float speed, float health, float damage, float firringSpeed ,float bulletSpeed, float money)
+    public void Init(Transform player, EnemySpawner spawner, Vector3 position,float speed, float health, float damage, float firringSpeed ,float bulletSpeed, float money, Enums.Enemies type)
     {
         this.Speed = speed;
         this.Health = health;
@@ -74,6 +76,11 @@ public class Enemy : BaseEnemy
         transform.position = position;
         this.playerTrans = player;
         this.spawner = spawner;
+        if(type == Enums.Enemies.elite)
+        {
+            Debug.Log("spawned");
+            addLevel = true;
+        }
     }
     private void Shoot()
     {
@@ -94,15 +101,23 @@ public class Enemy : BaseEnemy
     }
     private void OnDestroy()
     {
-        var en = EnemySpawner.instance; 
-        if(en.earnMoney)
+        if(earnMoney)
         {
-            return;
+           var stats = PlayerStats._instance;
+            if (money != 0)
+            {
+                stats.AddMoney(money);
+            }
+            print(addLevel);
+            if(addLevel)
+            {
+                stats.addLevel();
+            }
         }
-        if (money != 0)
-        {
-            var stats = PlayerStats._instance;
-            stats.AddMoney(money);
-        }
+    }
+    public void KillAfterPlayer()
+    {
+        earnMoney = false;
+        Destroy(this.gameObject);
     }
 }

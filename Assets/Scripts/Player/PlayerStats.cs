@@ -38,6 +38,7 @@ public class PlayerStats : MonoBehaviour
     public float currentFireSpeed {get; private set;}
     #region  Stats
     #endregion
+    public GameObject UpgradeMenu;
 
     public TextMeshProUGUI moneyText;
     public float money  { get; private set; }
@@ -76,7 +77,13 @@ public class PlayerStats : MonoBehaviour
         money = (int)(money);
         moneyText.text = money.ToString();
     }
-
+    public void addLevel()
+    {
+        print("level");
+        EnemySpawner.instance.StopSpawning();
+        Time.timeScale = 0;
+        UpgradeMenu.SetActive(true);
+    }
     public void RemoveMoney(float value)
     {
         money -= value;
