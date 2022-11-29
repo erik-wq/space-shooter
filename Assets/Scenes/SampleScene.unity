@@ -1443,6 +1443,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   levelText: {fileID: 279087465}
+  earnMoney: 1
 --- !u!4 &391479061
 Transform:
   m_ObjectHideFlags: 0
@@ -2968,9 +2969,9 @@ MonoBehaviour:
   damageUpgradeCost: {fileID: 1097295206}
   healthUpgradeCost: {fileID: 258458556}
   fireSpeedUpgradeCost: {fileID: 1684409456}
-  currentDamageTxt: {fileID: 0}
-  currentHealthTxt: {fileID: 0}
-  currentFireSpeedTxt: {fileID: 0}
+  currentDamageTxt: {fileID: 1239789253}
+  currentHealthTxt: {fileID: 1397737437}
+  currentFireSpeedTxt: {fileID: 1803922271}
   damageAfterUpdate: {fileID: 455807091}
   healthAfterUpdate: {fileID: 1882018740}
   fireSpeedAfterUpdate: {fileID: 1906912119}
@@ -3496,13 +3497,7 @@ MonoBehaviour:
   playerShoot: {fileID: 1090683755}
   bullets: {fileID: 1770878884}
   speed: 200
-  baseDamage: 30
-  baseFireSpeed: 1
-  baseHealth: 100
-  currentDamage: 0
   currentHealth: 100
-  currentFireSpeed: 0
-  maxHealth: 100
   healthSlider: {fileID: 1493234969}
   cam: {fileID: 519420031}
   rb: {fileID: 1090683748}

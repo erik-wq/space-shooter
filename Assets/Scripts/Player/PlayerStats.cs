@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 public class PlayerStats : MonoBehaviour
 {
+    #region GUI
     public TextMeshProUGUI damageUpgradeCost;
     public TextMeshProUGUI healthUpgradeCost;
     public TextMeshProUGUI fireSpeedUpgradeCost;
@@ -17,9 +17,9 @@ public class PlayerStats : MonoBehaviour
     public TextMeshProUGUI damageAfterUpdate;
     public TextMeshProUGUI healthAfterUpdate;
     public TextMeshProUGUI fireSpeedAfterUpdate;
+    #endregion
 
-
-
+    #region Upgrades
     private float dmgUpgradeCost = 50;
     private float hpUpgradeCost = 50;
     private float fsUpgradeCost = 50;
@@ -29,8 +29,15 @@ public class PlayerStats : MonoBehaviour
     public float fsMult = 1.2f;
 
     private float increment = 1.1f;
-
-    private PlayerMovement playerMovement;
+    #endregion
+    private float baseDamage = 30;
+    private float baseFireSpeed = 2f;
+    private float baseHealth = 100;
+    public float currentDamage {get; private set;}
+    public float currentHealth {get; private set;}
+    public float currentFireSpeed {get; private set;}
+    #region  Stats
+    #endregion
 
     public TextMeshProUGUI moneyText;
     public float money  { get; private set; }
@@ -51,6 +58,11 @@ public class PlayerStats : MonoBehaviour
         hpMult = 1;
         fsMult = 1;
         dmgMult = 1;
+
+        currentDamage = baseDamage;
+        currentHealth = baseHealth;
+        currentFireSpeed = baseFireSpeed;
+        money = 1000;
     }
 
     private void Update()
@@ -75,7 +87,12 @@ public class PlayerStats : MonoBehaviour
             dmgMult *= increment;
             dmgUpgradeCost *= increment;
             dmgUpgradeCost = (int)dmgUpgradeCost;
+            currentDamage = baseDamage + ((baseDamage* dmgMult)-baseDamage);
+            currentDamage = Mathf.Round(currentDamage * 10);
+            currentDamage /= 10;
             damageUpgradeCost.text = dmgUpgradeCost.ToString();
+            currentDamageTxt.text = currentDamage.ToString();
+            damageAfterUpdate.text = ((int)(baseDamage * (increment * dmgMult))).ToString();
         }
     }
 
@@ -89,7 +106,12 @@ public class PlayerStats : MonoBehaviour
             hpMult *= increment;
             hpUpgradeCost *= increment;
             hpUpgradeCost = (int)hpUpgradeCost;
+            currentHealth = baseHealth + ((baseHealth * hpMult) - baseHealth);
+            currentHealth = Mathf.Round(currentHealth * 10);
+            currentHealth /= 10;
             healthUpgradeCost.text = hpUpgradeCost.ToString();
+            currentHealthTxt.text = currentHealth.ToString();
+            healthAfterUpdate.text = ((int)(baseHealth * (increment * hpMult))).ToString();
         }
 
     }
@@ -103,7 +125,12 @@ public class PlayerStats : MonoBehaviour
             fsMult *= increment;
             fsUpgradeCost *= increment;
             fsUpgradeCost = (int)fsUpgradeCost;
+            currentFireSpeed = baseFireSpeed / fsMult * 2;
+            currentFireSpeed = Mathf.Round(currentFireSpeed * 10);
+            currentFireSpeed /= 10;
             fireSpeedUpgradeCost.text = fsUpgradeCost.ToString();
+            currentFireSpeedTxt.text = currentFireSpeed.ToString();
+            fireSpeedAfterUpdate.text = ((int)(baseFireSpeed * (increment * fsMult))).ToString();
         }
     }
 }

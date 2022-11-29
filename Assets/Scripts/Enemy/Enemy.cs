@@ -94,9 +94,13 @@ public class Enemy : BaseEnemy
     }
     private void OnDestroy()
     {
+        var en = EnemySpawner.instance; 
+        if(en.earnMoney)
+        {
+            return;
+        }
         if (money != 0)
         {
-            
             var stats = PlayerStats._instance;
             stats.AddMoney(money);
         }

@@ -30,7 +30,19 @@ public class EnemySpawner : MonoBehaviour
     private float _moneyMult = 1;
     private float _levelMult = 1;
     private bool _stop = false;
+    public bool earnMoney = true;
 
+    public static EnemySpawner instance;
+
+    private void Awake() 
+    {
+        if(instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        instance = this;
+    }
     private void Start()
     {
         _gameControl = GetComponentInParent<GameControl>();
@@ -204,6 +216,8 @@ public class EnemySpawner : MonoBehaviour
     }
     public void KillAllEnemies()
     {
+        earnMoney = false;
+        Debug.Log(earnMoney);
         var enemies = GetComponentsInChildren<Enemy>();
         foreach(var x in enemies)
         {
@@ -214,6 +228,7 @@ public class EnemySpawner : MonoBehaviour
         {
             Destroy(x.gameObject);
         }
+        earnMoney = true;
         active = false;
     }
     public void StopSpawning()
