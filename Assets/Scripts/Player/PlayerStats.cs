@@ -137,7 +137,7 @@ public class PlayerStats : MonoBehaviour
             currentFireSpeed /= 10;
             fireSpeedUpgradeCost.text = fsUpgradeCost.ToString();
             currentFireSpeedTxt.text = currentFireSpeed.ToString();
-            fireSpeedAfterUpdate.text = ((int)(baseFireSpeed * (increment * fsMult))).ToString();
+            fireSpeedAfterUpdate.text = (Mathf.Round((baseFireSpeed / (increment * fsMult) * 2)*10)/10).ToString();
         }
     }
 }
