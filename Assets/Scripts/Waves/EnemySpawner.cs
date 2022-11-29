@@ -24,7 +24,7 @@ public class EnemySpawner : MonoBehaviour
     private float _spawnTime;
     private float _aliveEnmies = 0;
 
-    private List<Wave> waves = new List<Wave>();
+    public List<Wave> waves = new List<Wave>();
     private int _currentLevel = 0;
 
     private float _moneyMult = 1;
@@ -43,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator RunningLevel(int level)
     {
-        levelText.SetText(_currentLevel.ToString());
+        levelText.SetText(("Level: " + (_currentLevel + 1) + " / " + waves.Count).ToString());
         var wait = new WaitForSeconds(0.05f);
         Wave currentWave = CopyCurentWave(level);
         print(currentWave.enemies);
@@ -215,6 +215,7 @@ public class EnemySpawner : MonoBehaviour
             Destroy(x.gameObject);
         }
         active = false;
+        
     }
     public void StopSpawning()
     {

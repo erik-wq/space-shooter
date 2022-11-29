@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a02d16e52ced45429641b56f5ca0927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animExplode: {fileID: 151350410}
   ofset: 3
   bulet: {fileID: 5925896035984299590, guid: 4c5bd6a4420a08a489f470dc276533c0, type: 3}
   firePositions:
@@ -244,7 +245,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e0894d72d41ebbe49b525ac71176337b, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.26150128
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

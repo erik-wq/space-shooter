@@ -45,18 +45,24 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 _startPos;
     private GameControl _gameControl;
 
+    public SpriteRenderer spriteRenderer2;
+    public ChangeColor changeColor;
 
     private void Awake()
-    {
+    {   
         _gameControl = GetComponentInParent<GameControl>();
         _startPos = transform.position;
         stats = PlayerStats._instance;
     }
 
+
     void Update()
     {
-       
-        
+        spriteRenderer2 = GetComponent<SpriteRenderer>();
+        spriteRenderer2.sprite = changeColor.spriteRenderer.sprite;
+
+        currentDamage = baseDamage + ((baseDamage * stats.dmgMult) - baseDamage);
+
         currentFireSpeed = baseFireSpeed / stats.fsMult * 2;
         
         currentDamageTxt.text = ((int)currentDamage).ToString();
@@ -130,7 +136,7 @@ public class PlayerMovement : MonoBehaviour
     {
         foreach (var trans in buletPos)
         {
-            currentDamage = baseDamage + ((baseDamage* stats.dmgMult)-baseDamage);
+            
             var bulet = Instantiate(bullet);
             bulet.Init((mousePos - rb.position).normalized, 5f , currentDamage);
             bulet.transform.position = trans.position;

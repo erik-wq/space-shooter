@@ -10,6 +10,7 @@ public class GameControl : MonoBehaviour
     public GameObject roundLoss;
     public GameObject MoneyUpgrade;
     public GameObject settings;
+    public GameObject settingsIngame;
 
     private PlayerMovement _player;
     public GameObject gameUI;
@@ -24,6 +25,8 @@ public class GameControl : MonoBehaviour
     {
         Menu.SetActive(false);
         Game.SetActive(true);
+        _spawner.ResumeSpawning();
+        Time.timeScale = 1;
 
         settings.SetActive(false);
         roundWin.SetActive(false);
@@ -35,10 +38,30 @@ public class GameControl : MonoBehaviour
             Debug.LogError("missing spawner script in child");
             return;
         }
+        _spawner.KillAllEnemies();
         _player.ResetToStart();
         _spawner.Activate();
     }
-    
+
+    void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            _spawner.StopSpawning();
+            Time.timeScale = 0;
+            settingsIngame.SetActive(true);
+            Menu.SetActive(false);
+            Game.SetActive(false);
+        }
+    }
+
+    public void Contineu()
+    {
+        _spawner.ResumeSpawning();
+        Time.timeScale = 1;
+        settingsIngame.SetActive(false);
+    }
+
     public void ShowWin()
     {
         _spawner.KillAllEnemies();
@@ -73,6 +96,7 @@ public class GameControl : MonoBehaviour
         roundLoss.SetActive(false);
         Game.SetActive(false);
         settings.SetActive(false);
+        settingsIngame.SetActive(false);
     }
 
     public void ShowUpgradeMenu()
@@ -85,6 +109,7 @@ public class GameControl : MonoBehaviour
     {
         settings.SetActive(true);
         MoneyUpgrade.SetActive(false);
+        Menu.SetActive(false);
     }
 
     public void ExitGame()

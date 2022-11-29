@@ -65,6 +65,13 @@ public class PlayerStats : MonoBehaviour
         moneyText.text = money.ToString();
     }
 
+    public void RemoveMoney(float value)
+    {
+        money -= value;
+        money = (int)(money);
+        moneyText.text = money.ToString();
+    }
+
 
     public void DmgUpgrade()
     {

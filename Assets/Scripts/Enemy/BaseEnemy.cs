@@ -11,6 +11,7 @@ public class BaseEnemy : MonoBehaviour
     protected float bulletSpeed;
     protected float money;
     protected EnemySpawner spawner;
+    public Animator animExplode;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -23,8 +24,13 @@ public class BaseEnemy : MonoBehaviour
             {
                 PlayerStats._instance.AddMoney(money);
                 this.spawner.DestroyEnemy();
-                Destroy(this.gameObject);
+                animExplode.Play("Explode");
             }
         }
+    }
+
+    public void Destory()
+    {
+        Destroy(this.gameObject);
     }
 }
