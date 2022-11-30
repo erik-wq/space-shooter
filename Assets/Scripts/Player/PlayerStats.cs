@@ -63,7 +63,7 @@ public class PlayerStats : MonoBehaviour
         currentDamage = baseDamage;
         currentHealth = baseHealth;
         currentFireSpeed = baseFireSpeed;
-        money = 1000;
+        money = 0;
     }
 
     private void Update()

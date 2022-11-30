@@ -9,10 +9,11 @@ public class SoundSettings : MonoBehaviour
     private static readonly string firstSetting = "firstSetting";
     private static readonly string BackgroundPref = "BackgroundPref";
     private static readonly string BulletPref = "BulletPref";
+
     private int firstSettingInt;
 
     public Slider bgAudioSlider, bulletAudioSlider;
-    public AudioSource bgAudioSource;
+    public AudioSource[] bgAudioSource;
     public AudioSource[] bulletsAudioSource;
 
     private float bgFloat, bullFloat;
@@ -23,8 +24,8 @@ public class SoundSettings : MonoBehaviour
 
         if(firstSettingInt == 0)
         {
-            bgFloat = 0.5f;
-            bullFloat = 0.5f;
+            bgFloat = 0.25f;
+            bullFloat = 0.25f;
             bgAudioSlider.value = bgFloat;
             bulletAudioSlider.value = bullFloat;
             PlayerPrefs.SetFloat(BackgroundPref, bgFloat);
@@ -36,6 +37,7 @@ public class SoundSettings : MonoBehaviour
         {
             bgFloat = PlayerPrefs.GetFloat(BackgroundPref);
             bgAudioSlider.value = bgFloat;
+
             bullFloat = PlayerPrefs.GetFloat(BulletPref);
             bulletAudioSlider.value = bullFloat;
         }
@@ -58,7 +60,10 @@ public class SoundSettings : MonoBehaviour
 
     public void UpdateAudio()
     {
-        bgAudioSource.volume = bgAudioSlider.value;
+        for (int i = 0; i < bgAudioSource.Length; i++)
+        {
+            bgAudioSource[i].volume = bgAudioSlider.value;
+        }
 
         for (int i = 0; i < bulletsAudioSource.Length; i++)
         {

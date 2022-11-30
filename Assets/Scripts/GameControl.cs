@@ -11,6 +11,7 @@ public class GameControl : MonoBehaviour
     public GameObject MoneyUpgrade;
     public GameObject settings;
     public GameObject settingsIngame;
+    public SpriteRenderer hrac;
 
     private PlayerMovement _player;
     public GameObject gameUI;
@@ -27,6 +28,7 @@ public class GameControl : MonoBehaviour
         Game.SetActive(true);
         _spawner.ResumeSpawning();
         Time.timeScale = 1;
+        hrac.color = new Color(1, 1, 1, 1);
 
         settings.SetActive(false);
         roundWin.SetActive(false);
@@ -51,16 +53,16 @@ public class GameControl : MonoBehaviour
             Time.timeScale = 0;
             settingsIngame.SetActive(true);
             Menu.SetActive(false);
-            Game.SetActive(false);
+            hrac.color = new Color(1, 1, 1,0);
         }
     }
 
     public void Continue()
-    {
+    {    
         _spawner.ResumeSpawning();
         Time.timeScale = 1;
         settingsIngame.SetActive(false);
-        Game.SetActive(true);
+        hrac.color = new Color(1, 1, 1, 1);
     }
 
     public void ShowWin()
@@ -104,6 +106,7 @@ public class GameControl : MonoBehaviour
     {
         MoneyUpgrade.SetActive(true);
         settings.SetActive(false);
+        Menu.SetActive(false);
     }
 
     public void ShowSettings()

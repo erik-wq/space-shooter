@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   baseDamage: 15
-  baseLife: 65
+  baseLife: 120
   baseFireSpeed: 2.5
   bulletSpeed: 8
   movingSpeed: 30
